@@ -1,0 +1,95 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Crasivo\Pages\Network\Rest\Action;
+
+use Bitrix\Main\DI\ServiceLocator;
+use Bitrix\Main\Engine\Action;
+use Bitrix\Main\Engine\ActionFilter\Authentication as AuthenticationFilter;
+use Bitrix\Main\Engine\ActionFilter\Csrf as CsrfFilter;
+use Bitrix\Main\Engine\ActionFilter\HttpMethod as HttpMethodFilter;
+use Bitrix\Main\SystemException;
+use Crasivo\Pages\Domain\Api\PageRedirect;
+use Crasivo\Pages\Domain\Api\PageRoute;
+use Crasivo\Pages\Domain\Api\RawPageRedirect;
+use Crasivo\Pages\Domain\Api\UpdatePageRedirect;
+use Crasivo\Pages\Network\Shared\Action\MacroConverterJson;
+use Crasivo\Pages\Network\Shared\Filter\ModuleRightFilter;
+use Crasivo\Pages\Network\Shared\Request\PageRedirectUpdateRequest;
+
+/**
+ * @final
+ * @internal
+ * @restUrl /rest/crasivo:pages.route.updateRedirect
+ */
+final class PageRedirectUpdateAction extends Action
+{
+    use MacroConverterJson;
+
+    /**
+     * Returns the settings for the controller action.
+     *
+     * @return array
+     */
+    public static function getSettings(): array
+    {
+        return [
+            'class' => __CLASS__,
+            '-prefilters' => [
+                CsrfFilter::class,
+            ],
+            '+prefilters' => [
+                new AuthenticationFilter(),
+                new HttpMethodFilter([
+                    HttpMethodFilter::METHOD_POST,
+                    HttpMethodFilter::METHOD_PUT,
+                ]),
+                new ModuleRightFilter(ModuleRightFilter::WRITE),
+            ],
+        ];
+    }
+
+    /**
+     * Execute controller action.
+     *
+     * @param PageRoute $pageRoute
+     * @param PageRedirectUpdateRequest $requestData
+     * @return mixed
+     * @throws \Throwable
+     */
+    public function run(
+        PageRoute $pageRoute,
+        PageRedirectUpdateRequest $requestData,
+    )
+    {
+        // check content type
+        if (!($pageRoute instanceof PageRedirect)) {
+            throw new SystemException(
+                sprintf(
+                    'Route %s has a different content type (%s).',
+                    $requestData->routePath,
+                    $pageRoute->getContentType()->value,
+                ),
+            );
+        }
+
+        // save via domain service
+        // todo: продублировать сервис в usecase
+        // todo: добавить мапперы (request>api)
+        $pageRoute = ServiceLocator::getInstance()
+            ->get(UpdatePageRedirect::class)
+            ->do(
+                pageRedirect: $pageRoute,
+                rawPageRedirect: new RawPageRedirect(
+                    isActive: $requestData->isActive,
+                    routeDomain: $requestData->routeDomain,
+                    routePath: $requestData->routePath,
+                    redirectUrl: $requestData->redirectUrl,
+                    pageProperties: null,
+                ),
+            );
+
+        return $this->serializeJsonModel($pageRoute);
+    }
+}

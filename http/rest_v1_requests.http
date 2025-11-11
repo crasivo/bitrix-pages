@@ -1,0 +1,99 @@
+### Routes: Create component
+POST {{ portal_url}}/rest/crasivo:pages.route.createComponent
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "component",
+  "componentName": "bitrix:main.include",
+  "componentParams": {
+    "AREA_FILE_SHOW": "file",
+    "PATH": "/include/note.php"
+  },
+  "routePath": "/pages/example-component-12"
+}
+
+### Routes: Create HTML
+POST {{ portal_url}}/rest/crasivo:pages.route.createHtml
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "html",
+  "htmlContent": "<h1>Hello!</h1>",
+  "routePath": "/pages/example-html"
+}
+
+### Routes: Create include area
+POST {{ portal_url}}/rest/crasivo:pages.route.createInclude
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "include",
+  "includePath": "%document_root%/include/note.php",
+  "routePath": "/pages/example-html"
+}
+
+### Route: Delete (universal)
+POST {{ portal_url}}/rest/crasivo:pages.route.delete
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "routePath": "/pages/example-html"
+}
+
+### Route: Get (universal)
+GET {{ portal_url}}/rest/crasivo:pages.route.get
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "routePath": "/pages/example-component"
+}
+
+### Routes: Update component
+POST {{ portal_url}}/rest/crasivo:pages.route.updateComponent
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "component",
+  "componentName": "bitrix:main.include",
+  "componentParams": {
+    "AREA_FILE_SHOW": "file",
+    "PATH": "/include/note.php"
+  },
+  "routePath": "/pages/example-component"
+}
+
+### Routes: Update HTML
+POST {{ portal_url}}/rest/crasivo:pages.route.updateHtml
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "html",
+  "htmlContent": "<h1>Hello!</h1>",
+  "routePath": "/pages/example-html"
+}
+
+### Routes: Update include area
+POST {{ portal_url}}/rest/crasivo:pages.route.updateInclude
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{ auth_token }}
+
+{
+  "contentType": "include",
+  "includePath": "%document_root%/include/note.php",
+  "routePath": "/pages/example-html"
+}
