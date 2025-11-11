@@ -21,7 +21,7 @@ class PageHtmlCreateRequest extends PageRouteRequest
      * @param array|null $pageProperties
      */
     public function __construct(
-        public bool $isActive,
+        public readonly bool $isActive,
         #[Domain]
         public readonly ?string $routeDomain,
         #[UriPath]
@@ -35,8 +35,7 @@ class PageHtmlCreateRequest extends PageRouteRequest
     }
 
     /**
-     * @param array $data
-     * @return static
+     * @inheritDoc
      */
     public static function fromRequestData(array $data): static
     {

@@ -24,8 +24,7 @@ class PageRouteDeleteRequest extends PageRouteRequest
     }
 
     /**
-     * @param array $data
-     * @return static
+     * @inheritDoc
      */
     public static function fromRequestData(array $data): static
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Crasivo\Pages\Network\Shared\Filter;
 
 use Bitrix\Main\Context;
@@ -49,7 +51,7 @@ class ModuleRightFilter extends BaseActionFilter
         }
 
         global $APPLICATION;
-        $moduleRight = $APPLICATION->GetGroupRight(AKBARS_PAGES_MODULE_ID);
+        $moduleRight = $APPLICATION->GetGroupRight(CRASIVO_PAGES_MODULE_ID);
         if ($moduleRight >= $this->minimalRight) {
             return null;
         }
