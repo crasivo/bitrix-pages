@@ -124,6 +124,7 @@ class crasivo_pages extends \CModule
      */
     public function InstallFiles()
     {
+        \CopyDirFiles(__DIR__ . '/admin', $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin');
         @mkdir($_SERVER['DOCUMENT_ROOT'] . '/local/components/' . $this->MODULE_ID, 0755, true);
         \CopyDirFiles(__DIR__ . '/components', $_SERVER['DOCUMENT_ROOT'] . '/local/components/' . $this->MODULE_ID, true, true);
         @mkdir($_SERVER['DOCUMENT_ROOT'] . '/local/routes', 0755, true);
@@ -163,6 +164,7 @@ class crasivo_pages extends \CModule
      */
     public function UnInstallFiles()
     {
+        \DeleteDirFiles(__DIR__ . '/admin', $_SERVER['DOCUMENT_ROOT'] . '/bitrix/admin');
         \DeleteDirFiles(__DIR__ . '/components', $_SERVER['DOCUMENT_ROOT'] . '/local/components/' . $this->MODULE_ID);
         \DeleteDirFiles(__DIR__ . '/routes', $_SERVER['DOCUMENT_ROOT'] . '/local/routes');
         $this->uninstallRoutingConfiguration();
