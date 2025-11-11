@@ -49,13 +49,12 @@
 
 ```shell
 # Via composer
-$ composer install crasivo/bitrix24-pages
+$ composer install crasivo/bitrix-pages
 # Via git
-$ git clone https://github.com/crasivo/bitrix24-pages ./local/modules/crasivo.pages
+$ git clone https://github.com/crasivo/bitrix-pages ./local/modules/crasivo.pages
 # Via curl
-$ curl https://github.com/crasivo/n8n-standalone/archive/refs/heads/main.tar.gz | tar -xzf - --strip-components 1 ./local/modules/crasivo.pages
-# Via wget
-$ wget https://github.com/crasivo/n8n-standalone/archive/refs/heads/main.tar.gz | tar -xzf - --strip-components 1 ./local/modules/crasivo.pages
+$ mkdir -p ./local/modules/crasivo.pages
+$ curl -sL https://github.com/crasivo/bitrix-pages/archive/refs/heads/main.tar.gz | tar -xzf - --strip-components 1 -C ./local/modules/crasivo.pages
 ```
 
 ### 2. Установить и настроить модуль
@@ -73,7 +72,7 @@ $ wget https://github.com/crasivo/n8n-standalone/archive/refs/heads/main.tar.gz 
 
 > На официальном сайте есть документация по использованию [Routing](https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=43&CHAPTER_ID=013764).
 
-# Эксплуатация
+# 🕹️ Эксплуатация
 
 ## Разработка
 
@@ -119,6 +118,10 @@ return [
 > Никогда не используйте и не обращайтесь к объектам из этого слоя без DI!
 > Все классы помечены аттрибутом `@internal`, т.е для служебного пользования.
 > Структура, вложенность и наименования могут измениться в любой момент (релиз).
+
+### UseCase
+
+> Данный слой и раздел в разработке.
 
 # Сопровождение и поддержка
 
