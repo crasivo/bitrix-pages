@@ -54,6 +54,8 @@ class PageRouteDeleteAction extends Action
         PageRoute $pageRoute,
     )
     {
+        // save via domain service
+        // todo: продублировать сервис в usecase
         ServiceLocator::getInstance()
             ->get(RemovePageRoute::class)
             ->do($pageRoute);

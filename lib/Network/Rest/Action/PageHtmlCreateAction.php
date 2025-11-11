@@ -71,7 +71,7 @@ final class PageHtmlCreateAction extends Action
         if ($existsRoute) {
             throw new SystemException(
                 sprintf(
-                    'Route % already exists.',
+                    'Route %s already exists.',
                     $requestData->routePath,
                 ),
             );
